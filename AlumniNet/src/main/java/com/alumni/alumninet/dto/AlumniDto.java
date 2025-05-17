@@ -17,4 +17,7 @@ public class AlumniDto {
     private String email;
     private String contact_no;
     private String passout_year;
+    private String image_name;
+    private String image_type;
+    private byte[] image_data;
 }

@@ -27,5 +27,9 @@ public class Alumni {
     @Column(name = "Contact_No", nullable = false, unique = true)
     private String contact_no;
     private String passout_year;
+    private String image_name;
+    private String image_type;
+    @Lob
+    private byte[] image_data;
 
 }

@@ -1,223 +1,222 @@
-import React, {useEffect, useState} from 'react';
-import {createAlumni, getAlumni, updateAlumni} from "../services/AlumniService.js";
-import {useNavigate, useParams} from "react-router-dom";
 
+import React, { useEffect, useState } from 'react';
+import { createAlumni, getAlumni, updateAlumni } from "../services/AlumniService.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AlumniComponent = () => {
+    const [admno, setAdmno] = useState("");
+    const [firstname, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [contact_no, setContact_no] = useState("");
+    const [passout_year, setPassout_year] = useState("");
+    const [imageFile, setImageFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [removeImage, setRemoveImage] = useState(false); // ✅ Add this line
 
-    const [admno, setAdmno] = useState("")
-    const [firstname, setFirstName] = useState("")
-    const [lastname, setLastName] = useState("")
-    const [email, setEmail] = useState("")
-    const [contact_no, setContact_no] = useState("")
-    const [passout_year, setPassout_year] = useState("")
-
-    const {id} = useParams();
+    const { admno: admnoParam } = useParams();
+    const navigator = useNavigate();
 
     const [errors, setErrors] = useState({
         admno: "", firstname: "", lastname: "", email: "", contact_no: "", passout_year: ""
-    })
-
-    const navigator = useNavigate();
+    });
 
     useEffect(() => {
-        if (id){
-            getAlumni(id).then((response) => {
-                // console.log(response.data);
-                setAdmno(response.data.admno)
-                setFirstName(response.data.firstname)
-                setLastName(response.data.lastname)
-                setEmail(response.data.email)
-                setContact_no(response.data.contact_no)
-                setPassout_year(response.data.passout_year)
-            }).catch(error => {
-                console.error(error);
-            })
+        if (admnoParam) {
+            getAlumni(admnoParam).then((response) => {
+                setAdmno(response.data.admno);
+                setFirstName(response.data.firstname);
+                setLastName(response.data.lastname);
+                setEmail(response.data.email);
+                setContact_no(response.data.contact_no);
+                setPassout_year(response.data.passout_year);
+
+                if (response.data.image_data && response.data.image_type) {
+                    const imgSrc = `data:${response.data.image_type};base64,${response.data.image_data}`;
+                    setPreviewUrl(imgSrc);
+                }
+            }).catch(console.error);
         }
-    }, [id])
+    }, [admnoParam]);
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImageFile(file);
+        setPreviewUrl(URL.createObjectURL(file));
+        setRemoveImage(false); // ✅ Reset this if new image is selected
+    };
 
-    // function saveOrUpdateAlumni(e){
-    //     e.preventDefault();
-    //
-    //
-    //     if (validateForm()) {
-    //         const alumni = {admno, firstname, lastname, email, contact_no, passout_year}
-    //         console.log(alumni)
-    //
-    //         if (admno){
-    //             updateAlumni(admno, alumni).then((response) => {
-    //                 console.log(response.data);
-    //                 navigator("/alumni");
-    //             }).catch(error => {
-    //                 console.error(error);
-    //             })
-    //         } else {
-    //             createAlumni(alumni).then((response) => {
-    //                 console.log(response.data);
-    //                 navigator("/alumni");
-    //             })
-    //         }
-    //     }
-    // }
-
-    function saveOrUpdateAlumni(e){
+    const saveOrUpdateAlumni = (e) => {
         e.preventDefault();
+        if (!validateForm()) return;
 
-        if (validateForm()) {
-            const alumni = { admno, firstname, lastname, email, contact_no, passout_year };
-            console.log(alumni);
+        const formData = new FormData();
+        formData.append("admno", admno);
+        formData.append("firstname", firstname);
+        formData.append("lastname", lastname);
+        formData.append("email", email);
+        formData.append("contact_no", contact_no);
+        formData.append("passout_year", passout_year);
 
-            if (id) {
-                // If id is present in URL → update
-                updateAlumni(admno, alumni).then((response) => {
-                    console.log(response.data);
-                    navigator("/alumni");
-                }).catch(error => {
-                    console.error(error);
-                });
-            } else {
-                // Otherwise → create new alumni
-                createAlumni(alumni).then((response) => {
-                    console.log(response.data);
-                    navigator("/alumni");
-                }).catch(error => {
-                    console.error(error);
-                });
-            }
+        if (imageFile) {
+            formData.append("imageFile", imageFile);
         }
-    }
+
+        // ✅ Add this line always, whether true or false
+        formData.append("removeImage", removeImage ? "true" : "false");
+
+        const submitAction = admnoParam
+            ? updateAlumni(admnoParam, formData)
+            : createAlumni(formData);
+
+        submitAction
+            .then(() => navigator("/alumni"))
+            .catch(console.error);
+    };
 
 
-    function validateForm(){
+    const validateForm = () => {
         let valid = true;
+        const errorsCopy = { ...errors };
 
-        const errorsCopy = {...errors};
+        if (admno.trim()) errorsCopy.admno = "";
+        else { errorsCopy.admno = "Admission Number is required"; valid = false; }
 
-        if (admno.trim()){
-            errorsCopy.admno = "";
-        } else {
-            errorsCopy.admno = "Admission Number is required";
-            valid = false;
-        }
-        if (firstname.trim()){
-            errorsCopy.firstname = "";
-        } else {
-            errorsCopy.firstname = "First Name is required";
-            valid = false;
-        }
-        if (email.trim()){
-            errorsCopy.email = "";
-        } else {
-            errorsCopy.email = "Email is required";
-            valid = false;
-        }
-        if (contact_no.trim()){
-            errorsCopy.contact_no = "";
-        } else {
-            errorsCopy.contact_no = "Contact Number is required";
-            valid = false;
-        }
-        if (passout_year.trim()){
-            errorsCopy.passout_year = "";
-        } else {
-            errorsCopy.passout_year = "Passing Year is required";
-            valid = false;
-        }
+        if (firstname.trim()) errorsCopy.firstname = "";
+        else { errorsCopy.firstname = "First Name is required"; valid = false; }
 
-        setErrors(errorsCopy)
+        if (email.trim()) errorsCopy.email = "";
+        else { errorsCopy.email = "Email is required"; valid = false; }
+
+        if (contact_no.trim()) errorsCopy.contact_no = "";
+        else { errorsCopy.contact_no = "Contact Number is required"; valid = false; }
+
+        if (passout_year.trim()) errorsCopy.passout_year = "";
+        else { errorsCopy.passout_year = "Passing Year is required"; valid = false; }
+
+        setErrors(errorsCopy);
         return valid;
-    }
+    };
 
-    function pageTitle(){
-        if (id){
-            return <h1 className="text-center">Update Alumni</h1>
-        }else{
-            return <h1 className="text-center">Add Alumni</h1>
-        }
-    }
+    const pageTitle = () => (
+        <h1 className="text-center">
+            {admnoParam ? "Update Alumni" : "Add Alumni"}
+        </h1>
+    );
 
     return (
         <div className="container">
-            <br/>
-            <br/>
+            <br />
             <div className="row">
                 <div className="card">
-                    {
-                        pageTitle()
-                    }
+                    {pageTitle()}
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
-                                {/*<label className = "form-label">Admission Number</label>*/}
                                 <input
-                                    type = "text"
-                                    placeholder = "Enter Admission Number"
-                                    name = "admno"
-                                    value = {admno}
-                                    className = {`form-control ${errors.admno ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setAdmno(e.target.value)}>
-                                </input>
-                                {/*{errors.id && <div className="invalid-feedback">{errors.admno}</div>}*/}
+                                    type="text"
+                                    placeholder="Enter Admission Number"
+                                    name="admno"
+                                    value={admno}
+                                    className={`form-control ${errors.admno ? "is-invalid" : ""}`}
+                                    onChange={(e) => setAdmno(e.target.value)}
+                                    disabled={!!admnoParam}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Enter First Name"
+                                    name="firstname"
+                                    value={firstname}
+                                    className={`form-control ${errors.firstname ? "is-invalid" : ""}`}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Enter Last Name"
+                                    name="lastname"
+                                    value={lastname}
+                                    className={`form-control ${errors.lastname ? "is-invalid" : ""}`}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Enter Email"
+                                    name="email"
+                                    value={email}
+                                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Enter Contact Number"
+                                    name="contact_no"
+                                    value={contact_no}
+                                    className={`form-control ${errors.contact_no ? "is-invalid" : ""}`}
+                                    onChange={(e) => setContact_no(e.target.value)}
+                                />
+                                <select
+                                    name="passout_year"
+                                    value={passout_year}
+                                    className={`form-control ${errors.passout_year ? "is-invalid" : ""}`}
+                                    onChange={(e) => setPassout_year(e.target.value)}
+                                >
+                                    <option value="">Select Year</option>
+                                    {Array.from({ length: 22 }, (_, i) => {
+                                        const year = new Date().getFullYear() - i;
+                                        return (
+                                            <option key={year} value={year}>
+                                                {year}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
 
                                 <input
-                                    type = "text"
-                                    placeholder = "Enter First Name"
-                                    name = "firstname"
-                                    value = {firstname}
-                                    className = {`form-control ${errors.firstname ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setFirstName(e.target.value)}>
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="form-control mb-2"
+                                />
 
-                                </input>
-                                {/*{errors.firstname && <div className="invalid-feedback">{errors.firstname}</div>}*/}
+                                {previewUrl && (
+                                    <>
+                                        <img
+                                            src={previewUrl}
+                                            alt="Profile Preview"
+                                            style={{
+                                                width: "100px",
+                                                height: "100px",
+                                                borderRadius: "6px",
+                                                marginBottom: "0.5rem",
+                                                border: "1px solid #ccc"
+                                            }}
+                                        />
+                                        <div>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-sm mb-2"
+                                                onClick={() => {
+                                                    setImageFile(null);
+                                                    setPreviewUrl(null);
+                                                    setRemoveImage(true);
+                                                }}
+                                            >
+                                                Remove Picture
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
 
-                                <input
-                                    type = "text"
-                                    placeholder = "Enter Last Name"
-                                    name = "lastname"
-                                    value = {lastname}
-                                    className = {`form-control ${errors.lastname ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setLastName(e.target.value)}>
-                                </input>
-                                {/*{errors.lastname && <div className="invalid-feedback">{errors.lastname}</div>}*/}
-
-                                <input
-                                    type = "text"
-                                    placeholder = "Enter Email"
-                                    name = "email"
-                                    value = {email}
-                                    className = {`form-control ${errors.email ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setEmail(e.target.value)}>
-                                </input>
-                                {/*{errors.email && <div className="invalid-feedback">{errors.email}</div>}*/}
-
-                                <input
-                                    type = "text"
-                                    placeholder = "Enter Contact Number"
-                                    name = "contact_no"
-                                    value = {contact_no}
-                                    className = {`form-control ${errors.contact_no ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setContact_no(e.target.value)}>
-                                </input>
-                                {/*{errors.contact_no && <div className="invalid-feedback">{errors.contact_no}</div>}*/}
-
-                                <input
-                                    type = "text"
-                                    placeholder = "Enter Passing Year"
-                                    name = "passout_year"
-                                    value = {passout_year}
-                                    className = {`form-control ${errors.passout_year ? "is-invalid" : ""}`}
-                                    onChange = {(e) => setPassout_year(e.target.value)}>
-                                </input>
-                                {/*{errors.passout_year && <div className="invalid-feedback">{errors.passout_year}</div>}*/}
-
-                                <button className="btn btn-success" onClick={saveOrUpdateAlumni}>Submit</button>
+                                <button className="btn btn-success" onClick={saveOrUpdateAlumni}>
+                                    Submit
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
-export default AlumniComponent
+    );
+};
+
+export default AlumniComponent;

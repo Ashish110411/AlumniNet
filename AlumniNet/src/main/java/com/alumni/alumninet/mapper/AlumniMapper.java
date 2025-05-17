@@ -11,7 +11,10 @@ public class AlumniMapper {
                 alumni.getLastname(),
                 alumni.getEmail(),
                 alumni.getContact_no(),
-                alumni.getPassout_year()
+                alumni.getPassout_year(),
+                alumni.getImage_name(),
+                alumni.getImage_type(),
+                alumni.getImage_data()
         );
     }
 
@@ -22,7 +25,10 @@ public class AlumniMapper {
                 alumniDto.getLastname(),
                 alumniDto.getEmail(),
                 alumniDto.getContact_no(),
-                alumniDto.getPassout_year()
+                alumniDto.getPassout_year(),
+                alumniDto.getImage_name(),
+                alumniDto.getImage_type(),
+                alumniDto.getImage_data()
         );
     }
 }
