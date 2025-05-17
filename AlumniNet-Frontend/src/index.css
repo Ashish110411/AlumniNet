@@ -1,68 +1,172 @@
-/*:root {*/
-/*  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;*/
-/*  line-height: 1.5;*/
-/*  font-weight: 400;*/
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-/*  color-scheme: light dark;*/
-/*  color: rgba(255, 255, 255, 0.87);*/
-/*  background-color: #242424;*/
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
 
-/*  font-synthesis: none;*/
-/*  text-rendering: optimizeLegibility;*/
-/*  -webkit-font-smoothing: antialiased;*/
-/*  -moz-osx-font-smoothing: grayscale;*/
+.container {
+    max-width: fit-content;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.container h1 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table thead th {
+    padding: 12px;
+    text-align: center;
+    font-size: 1.5rem; /* Increased font size */
+}
+
+.table tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.2rem; /* Increased font size */
+}
+
+
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+/*.table thead th {*/
+/*    padding: 12px;*/
+/*    text-align: center;*/
 /*}*/
 
-/*a {*/
-/*  font-weight: 500;*/
-/*  color: #646cff;*/
-/*  text-decoration: inherit;*/
-/*}*/
-/*a:hover {*/
-/*  color: #535bf2;*/
+/*.table tbody td {*/
+/*    padding: 10px;*/
+/*    vertical-align: middle;*/
+/*    text-align: center;*/
+/*    border-bottom: 1px solid #e0e0e0;*/
 /*}*/
 
-/*body {*/
-/*  margin: 0;*/
-/*  display: flex;*/
-/*  place-items: center;*/
-/*  min-width: 320px;*/
-/*  min-height: 100vh;*/
-/*}*/
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+}
 
-/*h1 {*/
-/*  font-size: 3.2em;*/
-/*  line-height: 1.1;*/
-/*}*/
+/* Image styling */
+img {
+    object-fit: cover;
+    border: 2px solid #dee2e6;
+}
 
-/*button {*/
-/*  border-radius: 8px;*/
-/*  border: 1px solid transparent;*/
-/*  padding: 0.6em 1.2em;*/
-/*  font-size: 1em;*/
-/*  font-weight: 500;*/
-/*  font-family: inherit;*/
-/*  background-color: #1a1a1a;*/
-/*  cursor: pointer;*/
-/*  transition: border-color 0.25s;*/
-/*}*/
-/*button:hover {*/
-/*  border-color: #646cff;*/
-/*}*/
-/*button:focus,*/
-/*button:focus-visible {*/
-/*  outline: 4px auto -webkit-focus-ring-color;*/
-/*}*/
+/* Button styles */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
 
-/*@media (prefers-color-scheme: light) {*/
-/*  :root {*/
-/*    color: #213547;*/
-/*    background-color: #ffffff;*/
-/*  }*/
-/*  a:hover {*/
-/*    color: #747bff;*/
-/*  }*/
-/*  button {*/
-/*    background-color: #f9f9f9;*/
-/*  }*/
-/*}*/
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+/* Floating Add Button */
+.floating-add-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 24px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-button:hover {
+    background-color: #0056b3;
+}
+
+/* Background Slideshow Container */
+.background-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Behind content */
+}
+
+/* Slideshow Track (holds all slides) */
+.slideshow-track {
+    display: flex;
+    width: calc(100vw * 6); /* 6 slides (3 repeated) */
+    height: 100%;
+    animation: slideLeft 30s linear infinite;
+}
+
+/* Each Slide */
+.slide {
+    flex: 0 0 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+}
+
+/* Slide Animation */
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-300vw); /* 3 full slides to left */
+    }
+}

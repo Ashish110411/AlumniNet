@@ -4,7 +4,7 @@ const HeaderComponent = () => {
         <div>
             <header>
                 <nav className="navbar navbar-light" style={{ backgroundColor: '#52840f' }}>
-                <a className="navbar-brand" href="https://ashish110411.netlify.app/">Alumni Management System</a>
+                <a className="navbar-brand" href="https://sunvalleyncr.in/">Alumni Management System</a>
                 </nav>
             </header>
         </div>

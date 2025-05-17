@@ -29,7 +29,7 @@ const ContactAlumniComponent = () => {
             <h2>Alumni Details</h2>
             {alumni ? (
                 <div className="card p-4">
-                    <p><strong>Admission No:</strong> {alumni.admno}</p>
+                    {/*<p><strong>Admission No:</strong> {alumni.admno}</p>*/}
                     <p><strong>First Name:</strong> {alumni.firstname}</p>
                     <p><strong>Last Name:</strong> {alumni.lastname}</p>
                     <p><strong>Email:</strong> {alumni.email}</p>

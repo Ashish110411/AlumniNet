@@ -26,27 +26,49 @@ const ListAlumniComponent = () => {
         navigator(`/contact-alumni/${admno}`);
     }
 
+    // function updateAlumni(admno) {
+    //     navigator(`/edit-alumni/${admno}`);
+    // }
+    //
+    // function removeAlumni(admno) {
+    //     deleteAlumni(admno).then((response) => {
+    //         getAllAlumni();
+    //     }).catch(error => {
+    //         console.error(error);
+    //     });
+    // }
+
     function updateAlumni(admno) {
-        navigator(`/edit-alumni/${admno}`);
+        const userInput = prompt("Enter Admission Number to confirm update:");
+        if (userInput === admno.toString()) {
+            navigator(`/edit-alumni/${admno}`);
+        } else {
+            alert("Admission Number does not match. Update canceled.");
+        }
     }
 
     function removeAlumni(admno) {
-        deleteAlumni(admno).then((response) => {
-            getAllAlumni();
-        }).catch(error => {
-            console.error(error);
-        });
+        const userInput = prompt("Enter Admission Number to confirm deletion:");
+        if (userInput === admno.toString()) {
+            deleteAlumni(admno).then(() => {
+                getAllAlumni();
+            }).catch(error => {
+                console.error(error);
+            });
+        } else {
+            alert("Admission Number does not match. Deletion canceled.");
+        }
     }
+
 
     return (
         <div className="container">
             <h1>List of Alumni</h1>
-            <button className="btn btn-primary mb-2" onClick={addNewAlumni}>Add Alumni</button>
+            {/*<button className="btn btn-primary mb-2" onClick={addNewAlumni}>Add Alumni</button>*/}
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>Profile Pic</th>
-                    <th>Admission No</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Passing Year</th>
@@ -55,7 +77,6 @@ const ListAlumniComponent = () => {
                 </thead>
                 <tbody>
                 {alumni.map((data, index) => {
-                    // Build image source if image data and type are present
                     const imageSrc = data.image_data && data.image_type
                         ? `data:${data.image_type};base64,${data.image_data}`
                         : null;
@@ -73,12 +94,11 @@ const ListAlumniComponent = () => {
                                     <span>No Image</span>
                                 )}
                             </td>
-                            <td>{data.admno}</td>
                             <td>{data.firstname}</td>
                             <td>{data.lastname}</td>
                             <td>{data.passout_year}</td>
                             <td>
-                                <button className="btn btn-info" onClick={() => contactAlumni(data.admno)}>Contact</button>
+                                <button className="btn btn-primary" onClick={() => contactAlumni(data.admno)}>Contact</button>
                                 <button className="btn btn-info" onClick={() => updateAlumni(data.admno)} style={{ marginLeft: "10px" }}>Update</button>
                                 <button className="btn btn-danger" onClick={() => removeAlumni(data.admno)} style={{ marginLeft: "10px" }}>Delete</button>
                             </td>
@@ -87,6 +107,14 @@ const ListAlumniComponent = () => {
                 })}
                 </tbody>
             </table>
+            <div style={{
+                position: "fixed",
+                bottom: "100px",
+                right: "100px",
+                zIndex: 1
+            }}>
+                <button className="btn btn-primary" onClick={addNewAlumni}>Add Alumni</button>
+            </div>
         </div>
     );
 }
