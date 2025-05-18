@@ -69,8 +69,8 @@ const ListAlumniComponent = () => {
                 <thead>
                 <tr>
                     <th>Profile Pic</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Name</th>
+                    {/*<th>Last Name</th>*/}
                     <th>Passing Year</th>
                     <th>Action</th>
                 </tr>
@@ -94,8 +94,8 @@ const ListAlumniComponent = () => {
                                     <span>No Image</span>
                                 )}
                             </td>
-                            <td>{data.firstname}</td>
-                            <td>{data.lastname}</td>
+                            <td>{data.firstname + " " + data.lastname}</td>
+                            {/*<td>{data.lastname}</td>*/}
                             <td>{data.passout_year}</td>
                             <td>
                                 <button className="btn btn-primary" onClick={() => contactAlumni(data.admno)}>Contact</button>
