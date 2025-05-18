@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 const HeaderComponent = () => {
-    return (
-        <div>
-            <header>
-                <nav className="navbar navbar-light" style={{ backgroundColor: '#52840f' }}>
-                <a className="navbar-brand" href="https://sunvalleyncr.in/">Alumni Management System</a>
-                </nav>
-            </header>
-        </div>
-    )
-}
+  return (
+    <div>
+      <a
+        className="navbar-brand "
+        style={{ fontSize: "30px" }}
+        href="https://sunvalleyncr.in/"
+      >
+        Alumni Management System
+      </a>
+    </div>
+  );
+};
 
-export default HeaderComponent
+export default HeaderComponent;
