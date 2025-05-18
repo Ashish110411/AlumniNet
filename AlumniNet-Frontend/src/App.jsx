@@ -1,36 +1,43 @@
-
-import './App.css'
-import HeaderComponent from "./components/HeaderComponent.jsx";
-import ListAlumniComponent from "./components/ListAlumniComponent.jsx";
-import FooterComponent from "./components/FooterComponent.jsx";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import AlumniComponent from "./components/AlumniComponent.jsx";
-import ContactAlumniComponent from "./components/ContactAlumniComponent.jsx";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ListAlumniComponent from "./components/ListAlumniComponent";
+import AlumniComponent from "./components/AlumniComponent";
+import ContactAlumniComponent from "./components/ContactAlumniComponent";
+import FooterComponent from "./components/FooterComponent";
+import HeaderComponent from "./components/HeaderComponent";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
 
-    return (
-        <>
-            <BrowserRouter>
-                <HeaderComponent/>
-                <Routes>
-                    {/*// http://localhost:3000*/}
-                    <Route path="/" element={<ListAlumniComponent/>}></Route>
-                    {/*// http://localhost:3000/alumni*/}
-                    <Route path="/alumni" element={<ListAlumniComponent/>}></Route>
-                    {/*// http://localhost:3000/add-alumni*/}
-                    <Route path="/add-alumni" element={<AlumniComponent/>}></Route>
-                    {/*// http://localhost:3000/contact-alumni*/}
-                    <Route path="/contact-alumni/:admno" element={<ContactAlumniComponent/>}></Route>
-                    {/*// http://localhost:3000/edit-alumni*/}
-                    <Route path="/edit-alumni/:admno" element={<AlumniComponent/>}></Route>
-                </Routes>
-                {/*<ListAlumniComponent/>*/}
-                <FooterComponent/>
-            </BrowserRouter>
+  useEffect(() => {
+    document.body.className = darkMode ? "dark-mode" : "light-mode";
+  }, [darkMode]);
 
-        </>
-    )
+  return (
+    <Router>
+      <div className="App">
+        <header>
+          <HeaderComponent />
+          <button
+            className="btn btn-secondary"
+            onClick={() => setDarkMode(!darkMode)}
+          >
+            {darkMode ? "Light" : "Dark"} Mode
+          </button>
+        </header>
+        <Routes>
+          <Route path="/" element={<ListAlumniComponent />} />
+          <Route path="/add-alumni" element={<AlumniComponent />} />
+          <Route path="/edit-alumni/:admno" element={<AlumniComponent />} />
+          <Route
+            path="/contact-alumni/:admno"
+            element={<ContactAlumniComponent />}
+          />
+        </Routes>
+        <FooterComponent />
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
