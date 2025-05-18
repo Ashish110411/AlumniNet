@@ -11,9 +11,11 @@ public interface AlumniService {
     AlumniDto createAlumni(AlumniDto alumniDto);
     AlumniDto getAlumniById(String alumniId);
     List<AlumniDto> getAllAlumni();
-    AlumniDto updateAlumni(String alumniId, AlumniDto updatedAlumni);
+//    AlumniDto updateAlumni(String alumniId, AlumniDto updatedAlumni);
     void deleteAlumni(String alumniId);
     AlumniDto addPic(AlumniDto alumni, MultipartFile imageFile) throws IOException;
+    AlumniDto updateAlumni(String alumniId, AlumniDto updatedAlumni, boolean removeImage);
+
 
 }
 

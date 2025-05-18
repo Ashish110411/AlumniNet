@@ -18,6 +18,8 @@ import java.util.List;
 @RequestMapping("/api/alumni")
 public class AlumniController {
 
+
+
     private final AlumniService alumniService;
 
     @PostMapping
@@ -84,8 +86,10 @@ public class AlumniController {
             updatedAlumni.setImage_type(null);
             updatedAlumni.setImage_data(null);
         }
+//        AlumniDto saved = alumniService.updateAlumni(admno, updatedAlumni, removeImage);
+//        AlumniDto saved = alumniService.updateAlumni(admno, updatedAlumni);
+        AlumniDto saved = alumniService.updateAlumni(admno, updatedAlumni, removeImage);
 
-        AlumniDto saved = alumniService.updateAlumni(admno, updatedAlumni);
         return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 

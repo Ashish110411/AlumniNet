@@ -44,7 +44,7 @@ public class AlumniServiceImpl implements AlumniService {
     }
 
     @Override
-    public AlumniDto updateAlumni(String alumniId, AlumniDto updatedAlumni) {
+    public AlumniDto updateAlumni(String alumniId, AlumniDto updatedAlumni, boolean removeImage) {
         Alumni alumni = alumniRepository.findById(alumniId).orElseThrow(
                 () -> new ResourceNotFoundException("Alumni not found for this Admission No: " + alumniId)
         );
@@ -55,10 +55,17 @@ public class AlumniServiceImpl implements AlumniService {
         alumni.setContact_no(updatedAlumni.getContact_no());
         alumni.setPassout_year(updatedAlumni.getPassout_year());
 
-        // ✅ Overwrite image fields even if they are null (to support removeImage flag)
-        alumni.setImage_data(updatedAlumni.getImage_data());
-        alumni.setImage_name(updatedAlumni.getImage_name());
-        alumni.setImage_type(updatedAlumni.getImage_type());
+        // ✅ Handle image logic properly
+        if (removeImage) {
+            alumni.setImage_data(null);
+            alumni.setImage_name(null);
+            alumni.setImage_type(null);
+        } else if (updatedAlumni.getImage_data() != null) {
+            alumni.setImage_data(updatedAlumni.getImage_data());
+            alumni.setImage_name(updatedAlumni.getImage_name());
+            alumni.setImage_type(updatedAlumni.getImage_type());
+        }
+        // else keep existing image as is
 
         Alumni updatedAlumniObj = alumniRepository.save(alumni);
         return AlumniMapper.mapToAlumniDto(updatedAlumniObj);
