@@ -105,14 +105,13 @@ const AlumniComponent = () => {
     );
 
     return (
-        <div className="container">
-            <br />
-            <div className="row">
-                <div className="card">
+        <div className="container py-4">
+            <div className="row justify-content-center">
+                <div className="card bg-body text-body shadow rounded col-md-8">
                     {pageTitle()}
                     <div className="card-body">
                         <form>
-                            <div className="form-group mb-2">
+                            <div className="form-group mb-3">
                                 <input
                                     type="text"
                                     placeholder="Enter Admission Number"
@@ -122,6 +121,9 @@ const AlumniComponent = () => {
                                     onChange={(e) => setAdmno(e.target.value)}
                                     disabled={!!admnoParam}
                                 />
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <input
                                     type="text"
                                     placeholder="Enter First Name"
@@ -130,6 +132,9 @@ const AlumniComponent = () => {
                                     className={`form-control ${errors.firstname ? "is-invalid" : ""}`}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <input
                                     type="text"
                                     placeholder="Enter Last Name"
@@ -138,14 +143,20 @@ const AlumniComponent = () => {
                                     className={`form-control ${errors.lastname ? "is-invalid" : ""}`}
                                     onChange={(e) => setLastName(e.target.value)}
                                 />
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="Enter Email"
                                     name="email"
                                     value={email}
                                     className={`form-control ${errors.email ? "is-invalid" : ""}`}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <input
                                     type="text"
                                     placeholder="Enter Contact Number"
@@ -154,6 +165,9 @@ const AlumniComponent = () => {
                                     className={`form-control ${errors.contact_no ? "is-invalid" : ""}`}
                                     onChange={(e) => setContact_no(e.target.value)}
                                 />
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <select
                                     name="passout_year"
                                     value={passout_year}
@@ -164,49 +178,50 @@ const AlumniComponent = () => {
                                     {Array.from({ length: 22 }, (_, i) => {
                                         const year = new Date().getFullYear() - i;
                                         return (
-                                            <option key={year} value={year}>
-                                                {year}
-                                            </option>
+                                            <option key={year} value={year}>{year}</option>
                                         );
                                     })}
                                 </select>
+                            </div>
 
+                            <div className="form-group mb-3">
                                 <input
                                     type="file"
                                     accept="image/*"
                                     onChange={handleImageChange}
-                                    className="form-control mb-2"
+                                    className="form-control"
                                 />
+                            </div>
 
-                                {previewUrl && (
-                                    <>
-                                        <img
-                                            src={previewUrl}
-                                            alt="Profile Preview"
-                                            style={{
-                                                width: "100px",
-                                                height: "100px",
-                                                borderRadius: "6px",
-                                                marginBottom: "0.5rem",
-                                                border: "1px solid #ccc"
+                            {previewUrl && (
+                                <div className="mb-3 text-center">
+                                    <img
+                                        src={previewUrl}
+                                        alt="Profile Preview"
+                                        style={{
+                                            width: "100px",
+                                            height: "100px",
+                                            borderRadius: "6px",
+                                            border: "1px solid #ccc"
+                                        }}
+                                    />
+                                    <div className="mt-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger btn-sm"
+                                            onClick={() => {
+                                                setImageFile(null);
+                                                setPreviewUrl(null);
+                                                setRemoveImage(true);
                                             }}
-                                        />
-                                        <div>
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger btn-sm mb-2"
-                                                onClick={() => {
-                                                    setImageFile(null);
-                                                    setPreviewUrl(null);
-                                                    setRemoveImage(true);
-                                                }}
-                                            >
-                                                Remove Picture
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
+                                        >
+                                            Remove Picture
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
+                            <div className="text-center">
                                 <button className="btn btn-success" onClick={saveOrUpdateAlumni}>
                                     Submit
                                 </button>
@@ -217,6 +232,7 @@ const AlumniComponent = () => {
             </div>
         </div>
     );
+
 };
 
 export default AlumniComponent;

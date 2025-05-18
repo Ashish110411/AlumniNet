@@ -62,15 +62,14 @@ const ListAlumniComponent = () => {
 
 
     return (
-        <div className="container">
-            <h1>List of Alumni</h1>
-            {/*<button className="btn btn-primary mb-2" onClick={addNewAlumni}>Add Alumni</button>*/}
-            <table className="table table-striped table-bordered">
-                <thead>
+        <div className="container bg-body text-body py-4 rounded-3 shadow">
+            <h1 className="mb-4">List of Alumni</h1>
+            <button className="btn btn-primary mb-2" onClick={addNewAlumni}>Add Alumni</button>
+            <table className="table table-striped table-bordered table-hover">
+                <thead className="table-light">
                 <tr>
                     <th>Profile Pic</th>
                     <th>Name</th>
-                    {/*<th>Last Name</th>*/}
                     <th>Passing Year</th>
                     <th>Action</th>
                 </tr>
@@ -95,27 +94,28 @@ const ListAlumniComponent = () => {
                                 )}
                             </td>
                             <td>{data.firstname + " " + data.lastname}</td>
-                            {/*<td>{data.lastname}</td>*/}
                             <td>{data.passout_year}</td>
                             <td>
                                 <button className="btn btn-primary" onClick={() => contactAlumni(data.admno)}>Contact</button>
-                                <button className="btn btn-info" onClick={() => updateAlumni(data.admno)} style={{ marginLeft: "10px" }}>Update</button>
-                                <button className="btn btn-danger" onClick={() => removeAlumni(data.admno)} style={{ marginLeft: "10px" }}>Delete</button>
+                                <button className="btn btn-info ms-2" onClick={() => updateAlumni(data.admno)}>Update</button>
+                                <button className="btn btn-danger ms-2" onClick={() => removeAlumni(data.admno)}>Delete</button>
                             </td>
                         </tr>
                     );
                 })}
                 </tbody>
             </table>
-            <div style={{
-                position: "fixed",
-                bottom: "100px",
-                right: "100px",
-                zIndex: 1
-            }}>
-                <button className="btn btn-primary" onClick={addNewAlumni}>Add Alumni</button>
-            </div>
+
+            {/*<div style={{*/}
+            {/*    position: "fixed",*/}
+            {/*    bottom: "100px",*/}
+            {/*    right: "100px",*/}
+            {/*    zIndex: 1*/}
+            {/*}}>*/}
+            {/*    <button className="btn btn-primary" onClick={addNewAlumni}>Add Alumni</button>*/}
+            {/*</div>*/}
         </div>
+
     );
 }
 

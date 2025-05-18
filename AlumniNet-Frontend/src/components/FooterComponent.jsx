@@ -5,7 +5,7 @@ const FooterComponent = () => {
         <div>
             <footer className="footer">
                 {/*<p>Copyright &copy; 2021</p>*/}
-                <p>2023 &copy; Sun Valley International School. All rights reserved</p>
+                <p>2025 &copy; Sun Valley International School. All rights reserved</p>
             </footer>
         </div>
     )

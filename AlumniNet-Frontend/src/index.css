@@ -1,276 +1,38 @@
-/* Card styles for forms */
-
-@import url("https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Monoton&family=UnifrakturMaguntia&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Monoton&family=UnifrakturMaguntia&display=swap");
-
-.unifrakturmaguntia-regular {
-  font-family: "UnifrakturMaguntia", cursive;
-  font-weight: 400;
-  font-style: normal;
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg: #f8f9fa;
+    --input-bg: #ffffff;
+    --input-text: #000000;
+    --btn-primary: #007bff;
+    --btn-danger: #dc3545;
+    --btn-success: #28a745;
+    --btn-info: #000000;
+    --table-bg: #ffffff;
 }
 
-.card {
-  padding: 2em;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #000000;
+    --input-bg: #000000;
+    --input-text: #ffffff;
+    --btn-primary: #3399ff;
+    --btn-danger: #ff4d4f;
+    --btn-success: #44c767;
+    --btn-info: #ffffff;
+    --table-bg: #000000;
 }
 
-.dark-mode .card {
-  background-color: #1e1e1e !important;
-  color: #ffffff !important;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+html, body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Form controls */
-.form-control {
-  transition: all 0.3s ease;
-  margin-bottom: 1rem;
-}
-
-.dark-mode .form-control {
-  background-color: #2a2a2a !important;
-  border-color: #444 !important;
-  color: #ffffff !important;
-}
-
-.dark-mode .form-control::placeholder {
-  color: #aaa !important;
-}
-
-.dark-mode .form-control:focus {
-  background-color: #2a2a2a !important;
-  border-color: #007bff !important;
-  color: #ffffff !important;
-}
-
-/* General paragraph and text elements */
-.dark-mode p {
-  color: #ffffff !important;
-}
-
-.dark-mode strong {
-  color: #ffffff !important;
-}
-
-header {
-  background-color: green;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  padding: 10px 20px;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  font-family: "Delius Swash Caps", cursive;
-}
-
-.dark-mode .navbar-brand {
-  color: #ffffff !important;
-}
-
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  line-height: 60px;
-  background-color: #ffffff;
-  text-align: center;
-  color: #52840f;
-  transition: all 0.3s ease;
-}
-
-.dark-mode .footer {
-  background-color: #1e1e1e !important;
-  color: #ffffff !important;
-} /* Reset and base styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  line-height: 1.6;
-  padding: 20px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
-}
-
-/* Light and Dark mode - affects body and containers */
-.light-mode {
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-/* Container adapts to theme */
-.container {
-  max-width: fit-content;
-  margin: 0 auto;
-  padding: 30px;
-  border-radius: 12px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  color: inherit;
-}
-
-.dark-mode .container {
-  background: #1e1e1e !important;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05) !important;
-  color: #ffffff !important;
-}
-
-/* Header */
-.container h1 {
-  font-size: 2.2rem;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
-  transition: color 0.3s ease;
-}
-
-/* Dark mode header text */
-.dark-mode .container h1 {
-  color: #ffffff !important;
-}
-
-/* Table styles */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: transparent;
-  color: inherit;
-}
-
-.table thead th {
-  padding: 12px;
-  text-align: center;
-  font-size: 1.5rem;
-}
-
-.table tbody td {
-  padding: 12px;
-  vertical-align: middle;
-  text-align: center;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.table thead {
-  background-color: #007bff;
-  color: white;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-  /* background-color: ; */
-  transition: background-color 0.3s ease;
-}
-
-/* Dark mode table adjustments */
-.dark-mode .table tbody td {
-  border-bottom: 1px solid #444;
-  color: #ffffff;
-}
-
-.dark-mode .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #2a2a2a !important;
-}
-
-.dark-mode .table tbody tr:nth-of-type(even) {
-  background-color: #1e1e1e;
-}
-
-/* Image styling */
-img {
-  object-fit: cover;
-  border: 2px solid #dee2e6;
-}
-
-/* Button styles */
-.btn {
-  padding: 8px 16px;
-  border: none;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-info {
-  background-color: #17a2b8;
-  color: white;
-}
-
-.btn-info:hover {
-  background-color: #138496;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #bd2130;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #0069d9;
-}
-
-/* Floating Add Button */
-.floating-add-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 14px 24px;
-  font-size: 16px;
-  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-  transition: background-color 0.3s ease;
-  z-index: 1000;
-}
-
-.floating-add-button:hover {
-  background-color: #0056b3;
-}
-
-/* Background slideshow - hidden to fix dark/light mode */
-.background-slideshow {
-  display: none;
-}
-
-/* Slide Animation */
-@keyframes slideLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-300vw);
-  }
+h1, h2, h3, h4, h5 {
+    color: var(--text-color);
 }
