@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { deleteAlumni, listAlumni } from "../services/AlumniService.js";
+import { listAlumni } from "../services/AlumniService.js";
 import { useNavigate } from "react-router-dom";
 
 const ListAlumniComponent = () => {
@@ -26,18 +26,6 @@ const ListAlumniComponent = () => {
         navigator(`/contact-alumni/${admno}`);
     }
 
-    // function updateAlumni(admno) {
-    //     navigator(`/edit-alumni/${admno}`);
-    // }
-    //
-    // function removeAlumni(admno) {
-    //     deleteAlumni(admno).then((response) => {
-    //         getAllAlumni();
-    //     }).catch(error => {
-    //         console.error(error);
-    //     });
-    // }
-
     function updateAlumni(admno) {
         const userInput = prompt("Enter Admission Number to confirm update:");
         if (userInput === admno.toString()) {
@@ -47,73 +35,61 @@ const ListAlumniComponent = () => {
         }
     }
 
-    function removeAlumni(admno) {
-        const userInput = prompt("Enter Admission Number to confirm deletion:");
-        if (userInput === admno.toString()) {
-            deleteAlumni(admno).then(() => {
-                getAllAlumni();
-            }).catch(error => {
-                console.error(error);
-            });
-        } else {
-            alert("Admission Number does not match. Deletion canceled.");
-        }
-    }
-
-
     return (
         <div className="container bg-body text-body py-4 rounded-3 shadow">
-            <h1 className="mb-4">List of Alumni</h1>
-            <button className="btn btn-primary mb-2" onClick={addNewAlumni}>Add Alumni</button>
-            <table className="table table-striped table-bordered table-hover">
-                <thead className="table-light">
+            <h1 className="mb-4 text-center">List of Alumni</h1>
+
+            <div className="text-center my-3">
+                <button className="custom-add-btn mb-2" onClick={addNewAlumni}>
+                    Add Alumni
+                </button>
+            </div>
+
+            <table className="table table-striped-columns">
+                <thead>
                 <tr>
                     <th>Profile Pic</th>
                     <th>Name</th>
                     <th>Passing Year</th>
-                    <th>Action</th>
+                    <th className="action-column">Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="table-group-divider">
                 {alumni.map((data, index) => {
                     const imageSrc = data.image_data && data.image_type
                         ? `data:${data.image_type};base64,${data.image_data}`
-                        : null;
+                        : '/no pic.jpg'; // Default image path
 
                     return (
                         <tr key={index}>
                             <td>
-                                {imageSrc ? (
-                                    <img
-                                        src={imageSrc}
-                                        alt="Profile"
-                                        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                                    />
-                                ) : (
-                                    <span>No Image</span>
-                                )}
+                                <img
+                                    src={imageSrc}
+                                    alt="Profile"
+                                    style={{ width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover" }}
+                                />
                             </td>
-                            <td>{data.firstname + " " + data.lastname}</td>
+                            <td>{`${data.firstname} ${data.lastname}`}</td>
                             <td>{data.passout_year}</td>
-                            <td>
-                                <button className="btn btn-primary" onClick={() => contactAlumni(data.admno)}>Contact</button>
-                                <button className="btn btn-info ms-2" onClick={() => updateAlumni(data.admno)}>Update</button>
-                                <button className="btn btn-danger ms-2" onClick={() => removeAlumni(data.admno)}>Delete</button>
+                            <td className="action-column">
+                                <button
+                                    className="btn btn-primary btn-sm"
+                                    onClick={() => contactAlumni(data.admno)}
+                                >
+                                    Contact
+                                </button>
+                                <button
+                                    className="btn btn-info btn-sm ms-2"
+                                    onClick={() => updateAlumni(data.admno)}
+                                >
+                                    Update
+                                </button>
                             </td>
                         </tr>
                     );
                 })}
                 </tbody>
             </table>
-
-            {/*<div style={{*/}
-            {/*    position: "fixed",*/}
-            {/*    bottom: "100px",*/}
-            {/*    right: "100px",*/}
-            {/*    zIndex: 1*/}
-            {/*}}>*/}
-            {/*    <button className="btn btn-primary" onClick={addNewAlumni}>Add Alumni</button>*/}
-            {/*</div>*/}
         </div>
 
     );

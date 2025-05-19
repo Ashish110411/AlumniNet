@@ -1,27 +1,32 @@
+
 :root {
     --bg-color: #ffffff;
     --text-color: #000000;
     --card-bg: #f8f9fa;
     --input-bg: #ffffff;
     --input-text: #000000;
-    --btn-primary: #007bff;
+    --btn-primary: #44a3ce;
     --btn-danger: #dc3545;
     --btn-success: #28a745;
     --btn-info: #000000;
     --table-bg: #ffffff;
+    --btn-add-bg: #000000;
+    --btn-add-text: #ffffff;
 }
 
-[data-theme="dark"] {
+[data-bs-theme="dark"] {
     --bg-color: #121212;
     --text-color: #ffffff;
     --card-bg: #000000;
     --input-bg: #000000;
     --input-text: #ffffff;
-    --btn-primary: #3399ff;
+    --btn-primary: #00c1fb;
     --btn-danger: #ff4d4f;
     --btn-success: #44c767;
     --btn-info: #ffffff;
     --table-bg: #000000;
+    --btn-add-bg: #ffffff;
+    --btn-add-text: #000000;
 }
 
 html, body {
@@ -36,3 +41,8 @@ html, body {
 h1, h2, h3, h4, h5 {
     color: var(--text-color);
 }
+
+
+
+
+

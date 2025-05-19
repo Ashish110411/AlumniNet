@@ -1,79 +1,6 @@
-/*.theme-toggle-container {*/
-/*  padding: 1rem;*/
-/*  text-align: center;*/
-/*  background-color: var(--card-bg);*/
-/*  border-bottom: 1px solid #ccc;*/
-/*}*/
 
-/*.theme-toggle-btn {*/
-/*  padding: 0.5rem 1rem;*/
-/*  font-size: 1rem;*/
-/*  cursor: pointer;*/
-/*  border: none;*/
-/*  background-color: var(--btn-info);*/
-/*  color: white;*/
-/*  border-radius: 4px;*/
-/*}*/
-
-/*.container {*/
-/*  margin-top: 1rem;*/
-/*}*/
-
-/*.card {*/
-/*  background-color: var(--card-bg);*/
-/*  padding: 1rem;*/
-/*  border-radius: 8px;*/
-/*  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
-/*  color: var(--text-color);*/
-/*}*/
-
-/*.table {*/
-/*  background-color: var(--table-bg);*/
-/*}*/
-
-/*input.form-control,*/
-/*select.form-control {*/
-/*  background-color: var(--bg-color);*/
-/*  color: var(--text-color);*/
-/*  border: 1px solid #ccc;*/
-/*  margin-bottom: 0.5rem;*/
-/*}*/
-
-/*input::placeholder {*/
-/*  color: #888;*/
-/*}*/
-
-/*button.btn {*/
-/*  margin-right: 0.5rem;*/
-/*}*/
-
-/*.btn-primary {*/
-/*  background-color: var(--btn-primary);*/
-/*  border-color: var(--btn-primary);*/
-/*}*/
-
-/*.btn-danger {*/
-/*  background-color: var(--btn-danger);*/
-/*  border-color: var(--btn-danger);*/
-/*}*/
-
-/*.btn-success {*/
-/*  background-color: var(--btn-success);*/
-/*  border-color: var(--btn-success);*/
-/*}*/
-
-/*.btn-info {*/
-/*  background-color: var(--btn-info);*/
-/*  border-color: var(--btn-info);*/
-/*}*/
-
-/*img {*/
-/*  object-fit: cover;*/
-/*}*/
-
-
+/* Theme toggle container and button */
 .theme-toggle-container {
-  padding: 1rem;
   text-align: center;
   background-color: var(--card-bg);
   border-bottom: 1px solid #ccc;
@@ -83,17 +10,37 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
-  border: none;
-  background-color: var(--btn-info);
-  color: white;
   border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: color 0.3s;
 }
 
+/* Theme-aware toggle button colors */
+[data-bs-theme="light"] .theme-toggle-btn {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+[data-bs-theme="dark"] .theme-toggle-btn {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--bs-primary); /* Optional Bootstrap blue */
+  background-color: transparent;
+}
+
+/* General layout */
 .container {
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
   padding-top: 1rem;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .card {
@@ -102,6 +49,7 @@
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 
 .table {
@@ -144,33 +92,73 @@ button.btn {
 .btn-info {
   background-color: var(--btn-info);
   border-color: var(--btn-info);
-  --text-color: ;
 }
 
-/* Container to center and pad content */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+.custom-add-btn {
+  background-color: var(--btn-add-bg);
+  color: var(--btn-add-text);
+  border: black;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Responsive grid-like rows */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -0.5rem;
+.custom-add-btn:hover {
+  opacity: 0.85;
+  cursor: pointer;
 }
 
-.card {
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
+/* Table styles for light and dark themes using data-bs-theme */
+
+[data-bs-theme="light"] table.custom-table {
+  background-color: #ffffff; /* white */
+  color: #000000;
+  border: 2px solid #000000; /* bootstrap green border */
 }
 
-.card-body {
-  padding: 1rem 0;
+[data-bs-theme="light"] table.custom-table thead {
+  background-color: #d4edda; /* light green header */
+  color: #0f5132;
+}
+
+[data-bs-theme="dark"] table.custom-table {
+  background-color: #000000; /* black */
+  color: #ffffff;
+  border: 2px solid #ffffff; /* same green border */
+}
+
+[data-bs-theme="dark"] table.custom-table thead {
+  background-color: #ff0000; /* dark green header */
+  color: #d1e7dd;
+}
+
+/* Action column - control width */
+.custom-table td.action-column,
+.custom-table th.action-column {
+  white-space: nowrap;
+  min-width: 140px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Responsive adjustments for action column and buttons */
+@media (max-width: 576px) {
+  .custom-table td.action-column,
+  .custom-table th.action-column {
+    min-width: 100px;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .custom-table td.action-column button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.4rem;
+  }
+}
+
+/* Smaller buttons for action */
+.btn-sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.875rem;
 }
